@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QuanLyTruongHoc" Class="QuanLyTruongHocDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(local);Initial Catalog=QuanLyTruongHoc;Integrated Security=True" SettingsObjectName="QuanLyTruongHoc.Properties.Settings" SettingsPropertyName="QuanLyTruongHocConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.DangNhap" Member="DangNhaps">
+    <Type Name="DangNhap">
+      <Column Name="MaGV" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MatKhau" Type="System.String" DbType="Char(50) NOT NULL" CanBeNull="false" />
+      <Association Name="GiaoVien_DangNhap" Member="GiaoVien" ThisKey="MaGV" OtherKey="MaGV" Type="GiaoVien" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GiangDay" Member="GiangDays">
+    <Type Name="GiangDay">
+      <Column Name="MaGV" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Lop" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="GiaoVien_GiangDay" Member="GiaoVien" ThisKey="MaGV" OtherKey="MaGV" Type="GiaoVien" IsForeignKey="true" />
+      <Association Name="LopHoc_GiangDay" Member="LopHoc" ThisKey="Lop" OtherKey="Lop" Type="LopHoc" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GiaoVien" Member="GiaoViens">
+    <Type Name="GiaoVien">
+      <Column Name="MaGV" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="HoTen" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="GioiTinh" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="NgaySinh" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="SoDT" Type="System.String" DbType="Char(10) NOT NULL" CanBeNull="false" />
+      <Column Name="MonGiangDay" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="GiaoVien_DangNhap" Member="DangNhap" ThisKey="MaGV" OtherKey="MaGV" Type="DangNhap" Cardinality="One" />
+      <Association Name="GiaoVien_GiangDay" Member="GiangDays" ThisKey="MaGV" OtherKey="MaGV" Type="GiangDay" />
+      <Association Name="GiaoVien_KQHocTap" Member="KQHocTaps" ThisKey="MaGV" OtherKey="MaGV" Type="KQHocTap" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Hoc" Member="Hocs">
+    <Type Name="Hoc">
+      <Column Name="MaHS" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Lop" Type="System.String" DbType="Char(10) NOT NULL" CanBeNull="false" />
+      <Association Name="HocSinh_Hoc" Member="HocSinh" ThisKey="MaHS" OtherKey="MaHS" Type="HocSinh" IsForeignKey="true" />
+      <Association Name="LopHoc_Hoc" Member="LopHoc" ThisKey="Lop" OtherKey="Lop" Type="LopHoc" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HocSinh" Member="HocSinhs">
+    <Type Name="HocSinh">
+      <Column Name="MaHS" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="HoVaTen" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="GioiTinh" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="NgaySinh" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="HocSinh_Hoc" Member="Hoc" ThisKey="MaHS" OtherKey="MaHS" Type="Hoc" Cardinality="One" />
+      <Association Name="HocSinh_KQHocTap" Member="KQHocTaps" ThisKey="MaHS" OtherKey="MaHS" Type="KQHocTap" />
+    </Type>
+  </Table>
+  <Table Name="dbo.KQHocTap" Member="KQHocTaps">
+    <Type Name="KQHocTap">
+      <Column Name="MaHS" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaGV" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="KT15P" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="KT1T" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="DiemThi" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="DiemTB" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="GiaoVien_KQHocTap" Member="GiaoVien" ThisKey="MaGV" OtherKey="MaGV" Type="GiaoVien" IsForeignKey="true" />
+      <Association Name="HocSinh_KQHocTap" Member="HocSinh" ThisKey="MaHS" OtherKey="MaHS" Type="HocSinh" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LopHoc" Member="LopHocs">
+    <Type Name="LopHoc">
+      <Column Name="Lop" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Phong" Type="System.String" DbType="Char(10) NOT NULL" CanBeNull="false" />
+      <Association Name="LopHoc_GiangDay" Member="GiangDays" ThisKey="Lop" OtherKey="Lop" Type="GiangDay" />
+      <Association Name="LopHoc_Hoc" Member="Hocs" ThisKey="Lop" OtherKey="Lop" Type="Hoc" />
+    </Type>
+  </Table>
+</Database>
